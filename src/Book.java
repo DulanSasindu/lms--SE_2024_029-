@@ -32,7 +32,7 @@ public class Book {
     }
 
     //Display
-    public void displayInfo(){
+    public void mainisplayInfo(){
         String status=isBorrowed? "Borrowed" : "Available";
         System.out.println("ID: " + id + " | Title: " + title + " | Author: " + author + " | Status: " + status);
     }
