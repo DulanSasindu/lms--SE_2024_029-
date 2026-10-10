@@ -52,7 +52,6 @@ public abstract class LibraryItem {
         return daysLate * 10.0;
     }
 
-    @Override
     public String toString() {
         return getClass().getSimpleName() + "{id='" + id + "', title='" + title + "', borrowed=" + isBorrowed + "}";
     }
