@@ -1,57 +1,34 @@
-import java.util.Scanner;
+package lms;
+
+import lms.model.Book;
+import lms.model.DVD;
+import lms.model.Student;
+import lms.model.Staff;
+import lms.service.Library;
 
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
 
-        System.out.println("=== Welcome to Library Management System ===");
+        // 1. Add Books and DVD
+        library.addItem(new Book("B001", "Clean Code", "Robert C. Martin"));
+        library.addItem(new Book("B002", "Effective Java", "Joshua Bloch"));
+        library.addItem(new DVD("D001", "Introduction to Algorithms", 120));
 
-        while (running) {
-            System.out.println("\nSelect an option:");
-            System.out.println("1. Add Book");
-            System.out.println("2. Display All Books");
-            System.out.println("3. Borrow Book");
-            System.out.println("4. Return Book");
-            System.out.println("5. Exit");
-            System.out.print("Enter choice: ");
+        // 2. Add Members (Student and Staff)
+        library.addMember(new Student("M001", "Nadeesha Perera"));
+        library.addMember(new Staff("M002", "Mr. Kasun Silva"));
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+        // 3. Display items, members, and late fees (Polymorphism in action!)
+        library.listItems();
+        library.listMembers();
+        library.printAllLateFees(3);
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter Book ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Enter Book Title: ");
-                    String title = scanner.nextLine();
-                    System.out.print("Enter Author Name: ");
-                    String author = scanner.nextLine();
-                    library.addBook(new Book(id, title, author));
-                    break;
-                case 2:
-                    library.displayAllBooks();
-                    break;
-                case 3:
-                    System.out.print("Enter Book ID to Borrow: ");
-                    int borrowId = scanner.nextInt();
-                    library.borrowBook(borrowId);
-                    break;
-                case 4:
-                    System.out.print("Enter Book ID to Return: ");
-                    int returnId = scanner.nextInt();
-                    library.returnBook(returnId);
-                    break;
-                case 5:
-                    running = false;
-                    System.out.println("Exiting System. Goodbye!");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
+        // 4. Test validation (try/catch for invalid book creation)
+        try {
+            new Book("B003", "", "Some Author");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Rejected invalid book: " + e.getMessage());
         }
-        scanner.close();
     }
 }
